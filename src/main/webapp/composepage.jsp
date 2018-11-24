@@ -11,7 +11,7 @@
 <body>
 
 
-Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
+Welcome to your mailbox  <%= request.getParameter("currentuser") %>
 
 <br>
 Compose a new mail
@@ -26,9 +26,10 @@ Compose a new mail
 	<input type="text" name="subject">
 	
 	<h3>Body</h3>
-	<textarea rows="7" cols="100" name="body" form="compose"></textarea>
+	<textarea rows="7" cols="100" name="body"></textarea>
 	<br> 
 	<input type="submit" value="SEND" >
+	<input type="hidden" name="currentuser" value= <%=request.getParameter("currentuser") %> >
 
 </form>
 

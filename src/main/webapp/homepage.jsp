@@ -1,3 +1,4 @@
+<%@page import="com.user.model.MessageQueue"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.user.model.User" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -10,7 +11,7 @@
 </head>
 <body>
 
-Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
+Welcome to your mailbox  <%= request.getAttribute("currentuser") %>
 
 <br> <br> <br>
 
@@ -22,19 +23,37 @@ Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
 
 <form action = "composepage.jsp">
 	<input type="submit" value="COMPOSE"  >
+	<input type="hidden" name="currentuser" value= <%=request.getAttribute("currentuser") %> >
 </form>
 <br>
 <form action = "viewmails">
 	<input type="submit" value="VIEW MAILS" >
+	<input type="hidden" name="currentuser" value= <%=request.getAttribute("currentuser") %> >
 </form>
 
-<% if(request.getAttribute("notification") != null) { %>
+<%
+	if(session.getAttribute("messagequeue")!=null) {
+	System.out.println("got message queue");
+	ArrayList<String> received = new ArrayList<String>();
+	ArrayList<MessageQueue> mqs = (ArrayList<MessageQueue>)session.getAttribute("messagequeue");
+	ArrayList<MessageQueue> newmqs = new ArrayList<MessageQueue>();
+	for(MessageQueue mq : mqs) {
+		if(mq.getFromId().equals(request.getAttribute("currentuser")) && mq.isReceived()) {
+			received.add(mq.getToId());
+		}
+		else
+			newmqs.add(mq);
+	}
+	session.setAttribute("messagequeue", newmqs);
+	if(!received.isEmpty()) {
+		System.out.println("sending notification");   %>
 		<h4>Notification Received</h4>
 		
-	<%	ArrayList<String> received = (ArrayList<String>)request.getAttribute("notification");
+	<%
 		for(String id : received) { %>
 			<br> <%= id %> has received your mail <br>
 	<% 	}
+	}
 } %>
 
 </body>

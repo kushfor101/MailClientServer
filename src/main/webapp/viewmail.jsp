@@ -11,7 +11,7 @@
 </head>
 <body>
 
-Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
+Welcome to your mailbox  <%= request.getParameter("currentuser") %>
 
 <br>
 <%  Message[] messages = (Message[])request.getSession().getAttribute("messages");
@@ -25,7 +25,7 @@ Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
 	ArrayList<MessageQueue> mqs = (ArrayList<MessageQueue>)request.getSession().getAttribute("messagequeue");
 		for(MessageQueue mq : mqs) {
 			System.out.println(mq.getFromId() + ":" + ms.getFrom()[0]);
-			if(mq.getFromId().equals(ms.getFrom()[0].toString()) && mq.getToId().equals((String)session.getAttribute("currentuser")) && mq.getSubject().equals(ms.getSubject())) {
+			if(mq.getFromId().equals(ms.getFrom()[0].toString()) && mq.getToId().equals((String)request.getParameter("currentuser")) && mq.getSubject().equals(ms.getSubject())) {
 				mq.setReceived(true);
 				System.out.println("setting true received");
 			}

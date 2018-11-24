@@ -26,19 +26,19 @@ public class ViewMailController {
 	public ModelAndView viewMails(HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("viewpage.jsp");
-		
-		String user = (String)req.getSession().getAttribute("currentuser");
+		mav.addObject("currentuser", (String)req.getParameter("currentuser"));
+		String user = (String)req.getParameter("currentuser");
 		int in = user.indexOf('@');
 		user = user.substring(0, in);
 		System.out.println("hellooooo"+user);
 		try {
 			Properties properties = new Properties();
-			properties.put("mail.pop3.host", "cakelycakes.com");
+			properties.put("mail.pop3.host", "samplemail.com");
 			Session emailSession = Session.getInstance(properties);
 			
 			System.out.println(user + " pwd ");
 			POP3Store emailStore = (POP3Store) emailSession.getStore("pop3");
-			emailStore.connect(user,"bagdogra");
+			emailStore.connect(user,"ju");
 
 			Folder emailFolder = emailStore.getFolder("INBOX");
 			emailFolder.open(Folder.READ_ONLY);

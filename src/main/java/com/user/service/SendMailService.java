@@ -20,7 +20,7 @@ public class SendMailService {
 		
 		try {
 			Properties properties = new Properties();
-			properties.put("mail.smtp.host", "cakelycakes.com");
+			properties.put("mail.smtp.host", "samplemail.com");
 			Session emailSession = Session.getInstance(properties);
 			System.out.println("MY ID" + fromId);
 			Message emailMessage = new MimeMessage(emailSession);

@@ -9,12 +9,11 @@
 </head>
 <body>
 
-Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
+Welcome to your mailbox  <%= request.getAttribute("currentuser") %>
 
 <br>
 
 <h2> Messages :  </h2>
-<br> <br>
 
 <form action="viewmail.jsp">
 <table>
@@ -36,9 +35,10 @@ Welcome to your mailbox  <%= session.getAttribute("currentuser") %>
    </tr>
    <% c++;  }
    %>
-   <input type="submit" value="view" >
    
 </table>
+	<input type="submit" value="view" >
+   <input type="hidden" name="currentuser" value=<%= request.getAttribute("currentuser") %> >
 </form>
 
 </body>

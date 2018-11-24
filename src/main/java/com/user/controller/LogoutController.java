@@ -15,7 +15,7 @@ public class LogoutController {
 	
 	@RequestMapping("logout")
 	public ModelAndView logout(HttpServletRequest req, HttpServletResponse res) {
-		req.getSession().removeAttribute("user");
+	//	req.getSession().removeAttribute("user");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index.jsp");
 		return mav;

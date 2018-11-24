@@ -25,7 +25,7 @@ public class SendMailController {
 	public ModelAndView compose(@RequestParam("toId") String toId, @RequestParam("subject") String subject,
 			@RequestParam("body") String body, HttpServletRequest req, HttpServletResponse res) {
 		
-		MessageQueue mq = new MessageQueue((String)req.getSession().getAttribute("currentuser"), toId, subject, false);
+		MessageQueue mq = new MessageQueue((String)req.getParameter("currentuser"), toId, subject, false);
 		ArrayList<MessageQueue> mp = new ArrayList<MessageQueue>();
 		if(req.getSession().getAttribute("messagequeue") != null)
 			mp = (ArrayList<MessageQueue>)req.getSession().getAttribute("messagequeue");
@@ -35,8 +35,9 @@ public class SendMailController {
 		System.out.println(toId);
 		System.out.println(subject);
 		System.out.println(body);
-		sendMailService.sendMail((String)req.getSession().getAttribute("currentuser"), toId, subject, body);
+		sendMailService.sendMail((String)req.getParameter("currentuser"), toId, subject, body);
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("currentuser",(String)req.getParameter("currentuser") );
 		mv.setViewName("homepage.jsp");
 		return mv;
 	}

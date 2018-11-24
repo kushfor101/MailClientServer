@@ -38,26 +38,27 @@ public class LoginController {
 			else
 				users = new ArrayList<User>();
 			users = User.addUser(users, user);
-			req.getSession().setAttribute("users", users);
-			req.getSession().setAttribute("currentuser", emailId);
-			if(req.getSession().getAttribute("messagequeue")!=null) {
-				System.out.println("got message queue");
-				ArrayList<String> received = new ArrayList<String>();
-				ArrayList<MessageQueue> mqs = (ArrayList<MessageQueue>)req.getSession().getAttribute("messagequeue");
-				ArrayList<MessageQueue> newmqs = new ArrayList<MessageQueue>();
-				for(MessageQueue mq : mqs) {
-					if(mq.getFromId().equals(emailId) && mq.isReceived()) {
-						received.add(mq.getToId());
-					}
-					else
-						newmqs.add(mq);
-				}
-				req.getSession().setAttribute("messagequeue", newmqs);
-				if(!received.isEmpty()) {
-					System.out.println("sending notification");
-					mv.addObject("notification", received);
-				}
-			}
+			mv.addObject("currentuser",emailId);
+		//	req.getSession().setAttribute("users", users);
+		//	req.getSession().setAttribute("currentuser", emailId);
+//			if(req.getSession().getAttribute("messagequeue")!=null) {
+//				System.out.println("got message queue");
+//				ArrayList<String> received = new ArrayList<String>();
+//				ArrayList<MessageQueue> mqs = (ArrayList<MessageQueue>)req.getSession().getAttribute("messagequeue");
+//				ArrayList<MessageQueue> newmqs = new ArrayList<MessageQueue>();
+//				for(MessageQueue mq : mqs) {
+//					if(mq.getFromId().equals(emailId) && mq.isReceived()) {
+//						received.add(mq.getToId());
+//					}
+//					else
+//						newmqs.add(mq);
+//				}
+//				req.getSession().setAttribute("messagequeue", newmqs);
+//				if(!received.isEmpty()) {
+//					System.out.println("sending notification");
+//					mv.addObject("notification", received);
+//				}
+//			}
 			return mv;
 		}
 		return mv;
